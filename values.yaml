@@ -1,0 +1,64 @@
+# Copyright 2021 Chaos Mesh Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Default values for chaos-mesh.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# timezone is the timezone where controller-manager, chaos-daemon and dashboard uses.
+# For example: "UTC" or "Asia/Shanghai"
+# This value will be set on controller-manager and dashboard container's
+# environment variable TZ.
+# You may need to set the timezone to be consistent with your Grafana configuration,
+# otherwise the query Grafana used to retrieve event maybe in wrong timezone.
+timezone: "JST"
+
+images:
+  # images.registry is the global container registry for the images, you could replace it with your self-hosted container registry.
+  registry: "ghcr.io"
+  # images.tag is the global image tag (for example, semiVer with prefix v, or latest).
+  tag: "v2.1.1"
+
+chaosDaemon:
+  # image would be constructed by <registry>/<repository>:<tag>
+  image:
+    # empty registry means using the global images.registry
+    registry: ""
+    repository: chaos-mesh/chaos-daemon
+    # empty tag means using the global images.tag
+    tag: ""
+
+dashboard:
+  rootUrl: http://localhost:2333
+  create: true
+  image:
+    # empty registry means using the global images.registry
+    registry: ""
+    repository: chaos-mesh/chaos-dashboard
+    # empty tag means using the global images.tag
+    tag: ""
+  securityMode: false
+  gcpSecurityMode: false
+  gcpClientId: ""
+  gcpClientSecret: ""
+
+  ingress:
+    ## Set to true to enable ingress record generation
+    enabled: true
+
+    ## Set this to true in order to add the corresponding annotations for cert-manager
+    certManager: false
+
+prometheus:
+  create: false
