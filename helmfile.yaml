@@ -1,0 +1,5 @@
+releases:
+  - chart: chaos-mesh/chaos-mesh
+    name: chaos-mesh
+    namespace: chaos-testing
+    version: 2.1.1
